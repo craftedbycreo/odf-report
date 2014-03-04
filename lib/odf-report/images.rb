@@ -7,9 +7,9 @@ module ODFReport
           placeholder_path = node.attribute('href').value
           old_extension = ::File.extname placeholder_path
           new_extension = ::File.extname path
-p old_extension
-p  new_extension
-          @image_names_replacements[placeholder_path] = placeholder_path[0...(-1 * old_extension.length)] + new_extension
+p path
+p placeholder_path
+          @image_names_replacements[path] = placeholder_path[0...(-1 * old_extension.length)] + new_extension
 #          @image_names_replacements[placeholder_path] = ::File.join(IMAGE_DIR_NAME, ::File.basename(placeholder_path))
         end
       end
@@ -17,7 +17,6 @@ p  new_extension
     def replace_images(file)
       return if @images.empty?
       @image_names_replacements.each_pair do |path, template_image|
-p ::File.exists? ::File.join(file.tmp_dir, ::File.dirname(path))
 	    FileUtils.mkdir(::File.join(file.tmp_dir, ::File.dirname(path)) ) unless ::File.exists? ::File.join(file.tmp_dir, ::File.dirname(path))
         file.update(template_image) do |content|
           content.replace ::File.read(path)
