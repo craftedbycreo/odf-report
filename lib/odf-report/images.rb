@@ -7,8 +7,9 @@ module ODFReport
           placeholder_path = node.attribute('href').value
           old_extension = ::File.extname placeholder_path
           new_extension = ::File.extname path
-          @image_names_replacements[placeholder_path] = placeholder_path[0..(-1 * old_extension.length)] + new_extension
-p  @image_names_replacements[placeholder_path]
+p old_extension
+p  new_extension
+          @image_names_replacements[placeholder_path] = placeholder_path[0...(-1 * old_extension.length)] + new_extension
 #          @image_names_replacements[placeholder_path] = ::File.join(IMAGE_DIR_NAME, ::File.basename(placeholder_path))
         end
       end
