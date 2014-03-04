@@ -26,23 +26,25 @@ module ODFReport
 		def remove
 			FileUtils.rm_rf(@tmp_dir)
 		end
+		def rename_content content_file, new_name
+			Zip::ZipFile.open(@path) do |z|
+				z.rename(content_file, new_name)
+			end
+		end
 		private
 		def update_content_file(content_file, &block)
 			Zip::ZipFile.open(@path) do |z|
 				cont = "#{@tmp_dir}/#{content_file}"
 				z.extract(content_file, cont)
 				txt = ''
-				new_extension = nil
 				::File.open(cont, "r") do |f|
 					txt = f.read
 				end
-				yield(txt, new_extension)
+				yield(txt)
 				::File.open(cont, "w") do |f|
-					 f.write(txt, new_extension)
+					 f.write(txt)
 				end
-p new_extension
 				z.replace(content_file, cont)
-				z.rename(content_file, new_name) unless new_extension.blank?
 			end
 		end
 		def random_filename(opts={})
