@@ -4,7 +4,8 @@ module ODFReport
 			txt = _node.inner_html
 			@fields.each do |f|
 				val = f.get_value(data_item)
-				txt.gsub!(f.to_placeholder, sanitize(val))
+				val = sanitize(val) unless f.skip_sanitize
+				txt.gsub!(f.to_placeholder, val)
 			end
 			_node.inner_html = txt
 		end

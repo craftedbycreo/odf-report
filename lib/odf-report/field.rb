@@ -4,6 +4,7 @@ class Field
   def initialize(opts, &block)
     @name = opts[:name]
     @data_field = opts[:data_field]
+    @skip_sanitize = opts[:skip_sanitize]
     unless @value = opts[:value]
       if block_given?
         @block = block
@@ -11,6 +12,9 @@ class Field
         @block = lambda { |item| self.extract_value(item) }
       end
     end
+  end
+  def skip_sanitize
+    @skip_sanitize
   end
   def get_value(data_item = nil)
     @value || @block.call(data_item) || ''

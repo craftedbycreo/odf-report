@@ -12,8 +12,8 @@ class Report
 		@sections = []
 		yield(self)
 	end
-	def add_field(field_tag, value='', &block)
-		opts = {:name => field_tag, :value => value}
+	def add_field(field_tag, value='', skip_sanitize = false, &block)
+		opts = {:name => field_tag, :value => value, :skip_sanitize => skip_sanitize}
 		field = Field.new(opts, &block)
 		@fields << field
 	end
