@@ -5,8 +5,8 @@ module ODFReport
       @images.each_pair do |image_name, path|
         if node = content.xpath("//draw:frame[@draw:name='#{image_name}']/draw:image").first
           placeholder_path = node.attribute('href').value
-          old_extension = File.extname placeholder_path
-          new_extension = File.extname path
+          old_extension = ::File.extname placeholder_path
+          new_extension = ::File.extname path
           @image_names_replacements[placeholder_path] = placeholder_path[0..(-1 * old_extension.length)] + new_extension
 p  @image_names_replacements[placeholder_path]
 #          @image_names_replacements[placeholder_path] = ::File.join(IMAGE_DIR_NAME, ::File.basename(placeholder_path))
@@ -16,8 +16,8 @@ p  @image_names_replacements[placeholder_path]
     def replace_images(file)
       return if @images.empty?
       @image_names_replacements.each_pair do |path, template_image|
-p File.exists? File.join(file.tmp_dir, File.dirname(path))
-	    FileUtils.mkdir(::File.join(file.tmp_dir, File.dirname(path)) ) unless File.exists? File.join(file.tmp_dir, File.dirname(path))
+p ::File.exists? ::File.join(file.tmp_dir, ::File.dirname(path))
+	    FileUtils.mkdir(::File.join(file.tmp_dir, ::File.dirname(path)) ) unless ::File.exists? ::File.join(file.tmp_dir, ::File.dirname(path))
         file.update(template_image) do |content|
           content.replace ::File.read(path)
         end
