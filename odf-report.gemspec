@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email = %q{sandrods@gmail.com}
   s.has_rdoc = false
   s.homepage = %q{http://sandrods.github.com/odf-report/}
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.3.8}
   s.summary = %q{Generates ODF files, given a template (.odt) and data, replacing tags}
 
   s.files         = `git ls-files`.split("\n")
