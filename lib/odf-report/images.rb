@@ -13,17 +13,12 @@ module ODFReport
 		def replace_images(file)
 			return if @images.empty?
 			@image_names_replacements.each_pair do |path, template_image|
-			p template_image
-			old_extension = ::File.extname template_image
-			new_extension = ::File.extname path
-			FileUtils.mkdir(::File.join(file.tmp_dir, ::File.dirname(template_image)) ) unless ::File.exists? ::File.join(file.tmp_dir, ::File.dirname(template_image))
-				file.update(template_image) do |content|
-p content
-					content.replace ::File.read(path)
-					if old_extension != new_extension
-						content.rename template_image, template_image[0...(-1 * old_extension.length)] + new_extension
+				new_extension = ::File.extname path
+				FileUtils.mkdir(::File.join(file.tmp_dir, ::File.dirname(template_image)) ) unless ::File.exists? ::File.join(file.tmp_dir, ::File.dirname(template_image))
+					file.update(template_image) do |content, new_ext|
+						content.replace ::File.read(path)
+						new_ext = new_extension
 					end
-				end
 			end
 		end # replace_images
 		# newer versions of LibreOffice can't open files with duplicates image names
