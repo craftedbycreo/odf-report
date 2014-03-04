@@ -17,7 +17,7 @@ p placeholder_path
     def replace_images(file)
       return if @images.empty?
       @image_names_replacements.each_pair do |path, template_image|
-	    FileUtils.mkdir(::File.join(file.tmp_dir, ::File.dirname(path)) ) unless ::File.exists? ::File.join(file.tmp_dir, ::File.dirname(path))
+	    FileUtils.mkdir(::File.join(file.tmp_dir, ::File.dirname(template_image)) ) unless ::File.exists? ::File.join(file.tmp_dir, ::File.dirname(template_image))
         file.update(template_image) do |content|
           content.replace ::File.read(path)
         end
