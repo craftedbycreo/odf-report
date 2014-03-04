@@ -5,7 +5,7 @@ module ODFReport
 			@images.each_pair do |image_name, path|
 				if node = content.xpath("//draw:frame[@draw:name='#{image_name}']/draw:image").first
 					placeholder_path = node.attribute('href').value
-					@image_names_replacements[path] = placeholder_path[0...(-1 * old_extension.length)] + new_extension
+					@image_names_replacements[path] = placeholder_path
 #					@image_names_replacements[placeholder_path] = ::File.join(IMAGE_DIR_NAME, ::File.basename(placeholder_path))
 				end
 			end
